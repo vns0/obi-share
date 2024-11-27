@@ -5,6 +5,8 @@ from uuid import uuid4
 from datetime import datetime, timedelta
 from markdown2 import markdown
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Request
+
 
 # Инициализация приложения
 app = FastAPI()
@@ -47,9 +49,12 @@ def verify_password(authorization: str = Header(None)):
 
 # Создание заметки
 @app.post("/create/")
-async def create_note(note: Note, auth: str = Depends(verify_password)):
+async def create_note(note: Note, request: Request, auth: str = Depends(verify_password)):
     note_id = str(uuid4())
     created_at = datetime.utcnow()
+
+    # Получаем домен из запроса
+    base_url = str(request.base_url).rstrip("/")
 
     # Сохранение заметки в базу данных
     async with aiosqlite.connect(DATABASE) as db:
@@ -63,7 +68,7 @@ async def create_note(note: Note, auth: str = Depends(verify_password)):
         await db.commit()
 
     # Возврат ссылки на заметку
-    return {"url": f"http://localhost:8000/read/{note_id}"}
+    return {"url": f"{base_url}/read/{note_id}"}
 
 import yaml
 from fastapi.responses import HTMLResponse
