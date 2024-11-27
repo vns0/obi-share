@@ -17,8 +17,15 @@ app.add_middleware(
     allow_headers=["*"],  # Разрешить все заголовки
 )
 
-# База данных SQLite
-DATABASE = "notes.db"
+from dotenv import load_dotenv
+import os
+from fastapi import Header, HTTPException
+
+load_dotenv()
+
+API_PASSWORD = os.getenv("API_PASSWORD")
+DATABASE = os.getenv("DATABASE_URL")
+
 
 # Модель данных для заметки
 class Note(BaseModel):
@@ -27,10 +34,6 @@ class Note(BaseModel):
     password: str = None
 
 
-from fastapi import Header, HTTPException
-
-# Конфигурация (замените на ваш пароль)
-API_PASSWORD = "your_secure_password"
 
 # Функция для проверки пароля
 def verify_password(authorization: str = Header(None)):
