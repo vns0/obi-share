@@ -1,0 +1,11 @@
+{
+	"id": "obi-share",
+	"name": "Obi Share",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "A plugin for sharing Obsidian notes via a secure link with optional password protection and self-destruct settings.",
+	"author": "Nikita Vtorushin",
+	"authorUrl": "https://vns.guru",
+	"fundingUrl": "https://vns.guru/support",
+	"isDesktopOnly": false
+}
