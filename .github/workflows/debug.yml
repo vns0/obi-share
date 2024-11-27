@@ -16,4 +16,5 @@ jobs:
       - name: Print secret for debugging
         env:
           DEBUG_MESSAGE: ${{ secrets.DEBUG_MESSAGE }}
-        run: echo "DEBUG: The secret message is: $DEBUG_MESSAGE"
+        run: |
+          echo "DEBUG: The secret message is: $DEBUG_MESSAGE"
